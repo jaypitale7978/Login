@@ -143,7 +143,9 @@ class _loginviewState extends State<loginview> {
                   ),
                 ),
               ),
-              
+
+
+
               Padding(
                 padding: const EdgeInsets.only(top: 58.0,right: 180),
                 child: Text("Already have an account?",style: TextStyle(
