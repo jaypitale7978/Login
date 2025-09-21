@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter/material.dart';
 
 class loginview extends StatefulWidget {
@@ -9,7 +10,36 @@ class loginview extends StatefulWidget {
 }
 
 class _loginviewState extends State<loginview> {
+  final FirebaseAuth _authgoogle = FirebaseAuth.instance;
+
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+
+  Future<void> signinwithgoogle() async {
+    try {
+      final googleuser = await _googleSignIn.signIn();
+      if (googleuser == null) return;
+
+      final googleauth = await googleuser.authentication;
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleauth.accessToken,
+        idToken: googleauth.idToken,
+      );
+
+      await _authgoogle.signInWithCredential(credential);
+      print("Signed in as: ${_authgoogle.currentUser?.displayName}");
+    } catch (e) {
+      print("Error: $e");
+    }
+  }
+
   @override
+  @override
+  void initState() {
+    // TODO: implement initState
+
+    super.initState();
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
@@ -50,11 +80,11 @@ class _loginviewState extends State<loginview> {
               Padding(
                 padding: const EdgeInsets.only(top: 38.0),
                 child: ElevatedButton(
-
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
-                      backgroundColor:Colors.white,
-                      minimumSize: Size(380, 61)),
+                    backgroundColor: Colors.white,
+                    minimumSize: Size(380, 61),
+                  ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -74,19 +104,17 @@ class _loginviewState extends State<loginview> {
               Padding(
                 padding: const EdgeInsets.only(top: 18.0),
                 child: ElevatedButton(
-
-                  onPressed: () {},
+                  onPressed: () {
+                    _googleSignIn;
+                  },
                   style: ElevatedButton.styleFrom(
-                      backgroundColor:Colors.white,
-                      minimumSize: Size(380, 61)),
+                    backgroundColor: Colors.white,
+                    minimumSize: Size(380, 61),
+                  ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Image.asset(
-                        'assets/apple_icon.png',
-
-                        fit: BoxFit.contain,
-                      ),
+                      Image.asset('assets/apple_icon.png', fit: BoxFit.contain),
                       SizedBox(width: 8),
                       Text("Sign up with Apple"),
                     ],
@@ -105,9 +133,7 @@ class _loginviewState extends State<loginview> {
                         indent: 18,
                       ),
                     ),
-                    Text("    or    ",style: TextStyle(
-                      color: Colors.grey
-                    ),),
+                    Text("    or    ", style: TextStyle(color: Colors.grey)),
                     Expanded(
                       child: Divider(
                         color: Colors.grey,
@@ -122,65 +148,63 @@ class _loginviewState extends State<loginview> {
               Padding(
                 padding: const EdgeInsets.only(top: 28.0),
                 child: ElevatedButton(
-
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
-                      backgroundColor:Colors.blueAccent,
-                      minimumSize: Size(380, 61)
-
+                    backgroundColor: Colors.blueAccent,
+                    minimumSize: Size(380, 61),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-
                       SizedBox(width: 8),
-                      Text("Create account",style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 21,
-                        fontWeight: FontWeight.bold
-                      ),),
+                      Text(
+                        "Create account",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 21,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ],
                   ),
                 ),
               ),
 
-
-
               Padding(
-                padding: const EdgeInsets.only(top: 58.0,right: 180),
-                child: Text("Already have an account?",style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500
-                ),),
+                padding: const EdgeInsets.only(top: 58.0, right: 180),
+                child: Text(
+                  "Already have an account?",
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                ),
               ),
 
               Padding(
                 padding: const EdgeInsets.only(top: 18.0),
                 child: ElevatedButton(
-
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
-                      backgroundColor:Colors.white,
-                      minimumSize: Size(380, 61)
-
+                    backgroundColor: Colors.white,
+                    minimumSize: Size(380, 61),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-
                       SizedBox(width: 8),
-                      Text("Sign in",style: TextStyle(
+                      Text(
+                        "Sign in",
+                        style: TextStyle(
                           color: Colors.blueAccent,
                           fontSize: 21,
-                          fontWeight: FontWeight.bold
-                      ),),
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ],
                   ),
                 ),
               ),
 
               Padding(
-                padding: const EdgeInsets.only(top: 148.0,right: 18,left: 36),
+                padding: const EdgeInsets.only(top: 148.0, right: 18, left: 36),
                 child: Row(
                   children: [
                     Expanded(
@@ -224,7 +248,6 @@ class _loginviewState extends State<loginview> {
                   ],
                 ),
               ),
-
             ],
           ),
         ),
