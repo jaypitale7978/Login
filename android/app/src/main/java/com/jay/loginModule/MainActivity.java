@@ -1,4 +1,5 @@
-package com.example.login;
+package com.jay.loginModule;
+
 
 import io.flutter.embedding.android.FlutterActivity;
 

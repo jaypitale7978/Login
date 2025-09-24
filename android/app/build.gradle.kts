@@ -6,9 +6,9 @@ plugins {
 }
 
 android {
-    namespace = "com.example.login"
-    compileSdk = 34
-    ndkVersion = "25.1.8937393"
+    namespace = "com.jay.loginModule"
+    compileSdk = 36
+    ndkVersion = "27.0.12077973" // ✅ Updated NDK version
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -21,14 +21,14 @@ android {
 
     sourceSets {
         getByName("main") {
-            java.srcDirs("src/main/kotlin")
+            java.srcDirs("src/main/java", "src/main/kotlin")
         }
     }
 
     defaultConfig {
-        applicationId = "com.example.login"
-        minSdk = 21
-        targetSdk = 34
+        applicationId = "com.jay.loginModule"
+        minSdk = flutter.minSdkVersion
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0.0"
     }
@@ -36,18 +36,19 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
+            isShrinkResources = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
             signingConfig = signingConfigs.getByName("debug")
         }
+
         debug {
             signingConfig = signingConfigs.getByName("debug")
         }
     }
 
-    // Optional: Only if you need multiple environments
     flavorDimensions += "environment"
     productFlavors {
         create("dev") {
@@ -69,9 +70,4 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.android.gms:play-services-auth:20.7.0")
-
-    // Only include these if you need them for other parts of your app
-    // implementation("androidx.core:core-ktx:1.12.0")
-    // implementation("androidx.appcompat:appcompat:1.6.1")
-    // implementation("com.google.android.material:material:1.10.0")
 }
